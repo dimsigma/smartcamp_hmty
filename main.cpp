@@ -1,24 +1,36 @@
 #include <iostream>
 #include <stdlib.h>
 #include <stdio.h>
+
+#ifdef OS_WINDOWS
 #include <mysql.h>
+#elif OS_MACOS
+#include <mysql/mysql.h>
+#elif OS_LINUX
+#include <mysql/mysql.h>
+#endif
 
 int main() {
     // MySQL result set
     //MYSQL_ROW row;               // Row data
 
 
-    const char* host = "127.0.0.1";  // MySQL server address
+    const char* host = "192.168.1.2";  // MySQL server address
     const char* user = "smarty";       // MySQL username
     const char* database = "smartcamp"; // Database name
     const char* query = "SELECT * FROM CUSTOMER;"; // SELECT query
 
     // SSL Certificates (Replace with actual paths to your certificates)
-    const char* ssl_key = "C:\\Univeristy\\Κατεύθυνση\\Βάσεις δεδομένων\\Εργασία\\smartcamp\\client.key";  // Client private key
-    const char* ssl_cert = "C:\\Univeristy\\Κατεύθυνση\\Βάσεις δεδομένων\\Εργασία\\smartcamp\\client.crt"; // Client certificate
-    const char* ssl_ca = "C:\\Univeristy\\Κατεύθυνση\\Βάσεις δεδομένων\\Εργασία\\smartcamp\\ca.crt";      // CA certificate
+    const char* ssl_key = "";  // Client private key
+    const char* ssl_cert = ""; // Client certificate
+    const char* ssl_ca = "";      // CA certificate
 
     // Initialize MySQL connection
+    if (mysql_library_init(0, NULL, NULL)) {
+        fprintf(stderr, "Could not initialize MySQL client library\n");
+        exit(1);
+    }
+
     MYSQL *conn;
     conn = mysql_init(NULL);
     if (conn == nullptr) {
@@ -32,12 +44,6 @@ int main() {
         mysql_close(conn);
         return 1;
     }
-
-    /*if (mysql_options(conn, MYSQL_OPT_SSL_CIPHER, "TLS_AES_128_GCM_SHA256") != 0) {
-        std::cerr << "Failed to set SSL cipher: " << mysql_error(conn) << std::endl;
-        mysql_close(conn);
-        return 1;
-    }*/
 
     // Connect to the MySQL database without a password
     if (!mysql_real_connect(conn, host, user, nullptr, database, 3306, nullptr, CLIENT_SSL)) {
@@ -82,6 +88,7 @@ int main() {
     // Clean up
     mysql_free_result(res);
     mysql_close(conn);
+    mysql_library_end();
 
     std::cout << "Query executed successfully.\n";
     return 0;
