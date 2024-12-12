@@ -10,7 +10,17 @@
 #include <mysql/mysql.h>
 #endif
 
-int main() {
+#include <toml++/toml.hpp>
+#include <errors.hpp>
+#include <Foundation/Context.hpp>
+
+int main(int argc, char* argv[]){
+    Foundation::Context* cont = new Foundation::Context();
+    delete cont;
+    return (int) ErrorCode::SUCCESS;
+}
+
+/*int main() {
     // MySQL result set
     //MYSQL_ROW row;               // Row data
 
@@ -93,3 +103,4 @@ int main() {
     std::cout << "Query executed successfully.\n";
     return 0;
 }
+*/

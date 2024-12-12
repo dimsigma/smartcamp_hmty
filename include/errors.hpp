@@ -1,0 +1,11 @@
+#pragma once
+
+enum class ErrorCode {
+    SUCCESS = 0x00,
+    ENV_LOCALAPPDATA_NOT_SET = 0x01,
+    ENV_HOME_NOT_SET = 0x02,
+    ENV_XDG_CONFIG_HOME_NOT_SET = 0x03,
+    UNABLE_TO_CREATE_CONFIG_FILE = 0x04,
+    WIN32_ERROR = 0x05,
+    UNKNOWN_ERROR = 0xFF
+};

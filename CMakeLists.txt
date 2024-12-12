@@ -24,6 +24,7 @@ endif ()
 
 add_executable(smartcamp
         main.cpp
+        src/Foundation/Context.cpp
 )
 
 if (NOT PLATFORM STREQUAL "Linux")
@@ -52,6 +53,11 @@ else ()
         "${MYSQL_CLIENT_LIB_LIB_DIR}"
         )
 endif()
+
+target_include_directories(smartcamp PRIVATE
+        "./external/tomlplusplus/include"
+        "./include"
+)
 
 target_link_libraries(smartcamp PRIVATE
         mysqlclient
