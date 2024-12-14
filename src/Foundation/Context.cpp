@@ -32,8 +32,8 @@ Context::Context(){
 }
 
 Context::~Context(){
-    free(this->configFilePath);
-    if(this->configFilePointer != NULL) fclose(this->configFilePointer);
+    free((void*) this->configFilePath);
+    if(this->configFilePointer != NULL) fclose((FILE*) this->configFilePointer);
 }
 
 ErrorCode Context::getConfigDirectory(){
@@ -79,14 +79,12 @@ ErrorCode Context::getFile(){
             return ErrorCode::WIN32_ERROR;
         }
 #else
-
         DIR* d = opendir(m[1].str().c_str());                                           //Try opening the directory
         if (d) closedir(d);                                                             //If it exists, close it
         else if (ENOENT == errno) {                                                     //If the directory does not exist
             mkdir(m[1].str().c_str(),                                                   //create it
                 S_IRUSR | S_IWUSR | S_IXUSR | S_IRGRP | S_IWGRP | S_IXGRP | S_IROTH);   // rwxr-xr--
         } else return ErrorCode::UNKNOWN_ERROR;                                         //opendir() failed
-
 #endif
 
         this->configFilePointer = fopen(this->configFilePath, "w");                     //Create the file

@@ -1,6 +1,6 @@
 #pragma once
 
-enum class ErrorCode {
+const enum class ErrorCode {
     SUCCESS = 0x00,
     ENV_LOCALAPPDATA_NOT_SET = 0x01,
     ENV_HOME_NOT_SET = 0x02,

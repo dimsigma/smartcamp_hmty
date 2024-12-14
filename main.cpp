@@ -15,7 +15,7 @@
 #include <Foundation/Context.hpp>
 
 int main(int argc, char* argv[]){
-    Foundation::Context* cont = new Foundation::Context();
+    Foundation::Context* cont = Foundation::Context::getInstance();
     delete cont;
     return (int) ErrorCode::SUCCESS;
 }
