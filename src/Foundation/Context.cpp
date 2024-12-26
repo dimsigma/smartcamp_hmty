@@ -39,6 +39,10 @@ Context::Context(){
 Context::~Context(){
     free((void*) this->configFilePath);
     if(this->configFilePointer != NULL) fclose((FILE*) this->configFilePointer);
+    free((void*) this->config->ip);
+    free((void*) this->config->username);
+    free((void*) this->config->passwd);
+    free((void*) this->config);
 }
 
 ErrorCode Context::getConfigDirectory(){
