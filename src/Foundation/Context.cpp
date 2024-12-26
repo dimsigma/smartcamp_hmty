@@ -14,8 +14,11 @@
 #include <sys/types.h>
 #include <sys/stat.h>
 
+#include <toml++/toml.hpp>
+
 #include <errors.hpp>
 #include <Foundation/Context.hpp>
+#include <Foundation/Config.hpp>
 
 using namespace Foundation;
 using namespace std;
@@ -29,6 +32,8 @@ Context::Context(){
     
     err = this->getFile();
     if(err != ErrorCode::SUCCESS) this->printError();
+
+    err = this->getConfig();
 }
 
 Context::~Context(){
@@ -92,6 +97,40 @@ ErrorCode Context::getFile(){
         std::cout << "Config file created" << endl;
     }
     std::cout << "Config file opened" << endl;
+    fclose((FILE*) this->configFilePointer);
+    return ErrorCode::SUCCESS;
+}
+
+ErrorCode Context::getConfig(){
+    this->config = (Config*) malloc(sizeof(Config));
+    
+    auto fileConfig = toml::parse_file(this->configFilePath);
+
+    /*const char* const ip = ((string) fileConfig["server"]["ip"].value_or(""sv)).c_str();
+    this->config->ip = (char*) malloc(sizeof(ip));
+    strcpy(this->config->ip, ip);*/
+    setCharConfigVar(ip, "server", "ip");
+    setIntConfigVar(port, "server", "port");
+
+    setCharConfigVar(username, "user", "username");
+    setCharConfigVar(passwd, "user", "passwd");
+    this->config->hasPassword = (strcmp(this->config->passwd, "") == 0) ? 0 : 1;
+
+    setStrConfigVar(sslCA, "ssl", "ca");
+    setStrConfigVar(sslCRT, "ssl", "crt");
+    setStrConfigVar(sslKEY, "ssl", "key");
+
+#ifdef DEBUG
+    std::cout << this->config->ip << endl;
+    std::cout << this->config->port << endl;
+    std::cout << this->config->username << endl;
+    std::cout << this->config->passwd << endl;
+    std::cout << this->config->hasPassword << endl;
+    std::cout << this->config->sslCA << endl;
+    std::cout << this->config->sslCRT << endl;
+    std::cout << this->config->sslKEY << endl;
+#endif
+
     return ErrorCode::SUCCESS;
 }
 

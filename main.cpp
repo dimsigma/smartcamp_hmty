@@ -25,15 +25,15 @@ int main(int argc, char* argv[]){
     //MYSQL_ROW row;               // Row data
 
 
-    const char* host = "192.168.1.2";  // MySQL server address
+    const char* host = "127.0.0.1";  // MySQL server address
     const char* user = "smarty";       // MySQL username
     const char* database = "smartcamp"; // Database name
     const char* query = "SELECT * FROM CUSTOMER;"; // SELECT query
 
-    // SSL Certificates (Replace with actual paths to your certificates)
-    const char* ssl_key = "";  // Client private key
-    const char* ssl_cert = ""; // Client certificate
-    const char* ssl_ca = "";      // CA certificate
+    // SSL Certificates 
+    const char* ssl_key = "/Users/ssveronis/Library/CloudStorage/GoogleDrive-ssveronis@gmail.com/Άλλοι υπολογιστές/Ο υπολογιστής μου (1)/Σχολή/7ο εξάμηνο/Βάσεις Δεδομένων/docker/ssl/macOS/client-key.pem";  // Client private key
+    const char* ssl_cert = "/Users/ssveronis/Library/CloudStorage/GoogleDrive-ssveronis@gmail.com/Άλλοι υπολογιστές/Ο υπολογιστής μου (1)/Σχολή/7ο εξάμηνο/Βάσεις Δεδομένων/docker/ssl/macOS/client-cert.pem"; // Client certificate
+    const char* ssl_ca = "/Users/ssveronis/Library/CloudStorage/GoogleDrive-ssveronis@gmail.com/Άλλοι υπολογιστές/Ο υπολογιστής μου (1)/Σχολή/7ο εξάμηνο/Βάσεις Δεδομένων/docker/ssl/macOS/ca-cert.pem";      // CA certificate
 
     // Initialize MySQL connection
     if (mysql_library_init(0, NULL, NULL)) {
@@ -55,7 +55,7 @@ int main(int argc, char* argv[]){
         return 1;
     }
 
-    // Connect to the MySQL database without a password
+    // Connect to the MySQL database 
     if (!mysql_real_connect(conn, host, user, nullptr, database, 3306, nullptr, CLIENT_SSL)) {
         fprintf(stderr, "MySQL connection error: %s\n", mysql_error(conn));
         return 1;
@@ -90,7 +90,7 @@ int main(int argc, char* argv[]){
     MYSQL_ROW row;
     while ((row = mysql_fetch_row(res))) {
         for (unsigned int i = 0; i < mysql_num_fields(res); i++) {
-            std::cout << row[i] << "\t";
+            if(row[i]) std::cout << row[i] << "\t";
         }
         std::cout << std::endl;
     }
