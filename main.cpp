@@ -11,11 +11,24 @@
 #endif
 
 #include <toml++/toml.hpp>
+
 #include <errors.hpp>
+
 #include <Foundation/Context.hpp>
+#include <Commands/Config.hpp>
 
 int main(int argc, char* argv[]){
     Foundation::Context* cont = Foundation::Context::getInstance();
+
+    if(argc == 1){
+        std::cout << "Missing Parameters" << std::endl;
+        return 1;
+    }
+
+    if(!strcmp(argv[1], "config")){
+        Commands::Config(argc-2,(char**) &argv[2]); //argc is decreased by 2 and also pass the 3 argument.
+    }
+    
     delete cont;
     return (int) ErrorCode::SUCCESS;
 }

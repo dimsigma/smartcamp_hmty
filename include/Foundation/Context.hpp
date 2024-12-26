@@ -18,17 +18,20 @@ class Context
 private:
     const char* configFilePath;               //The path to the config file
     const std::FILE* configFilePointer;       //Pointer to the config file
-    Foundation::Config* config;
+
+    ErrorCode err;
 
     ErrorCode getConfigDirectory();     //Sets configFilePath
     ErrorCode getFile();                //Sets configFilePointer (Also creates file and directory if needed)
     ErrorCode getConfig();
-    void printError();                  //Prints error codes
 
     inline static Context* instance = nullptr;
 
     Context();                          //Constructor
 public:
+    Foundation::Config* config;
+    const char* const getConfigFilePath(void) const;
+
     Context(const Context& obj) = delete;
 
     inline static Context* getInstance(){

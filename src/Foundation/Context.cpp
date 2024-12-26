@@ -23,17 +23,17 @@
 using namespace Foundation;
 using namespace std;
 
-ErrorCode err;
-
 Context::Context(){
-    err = this->getConfigDirectory();
-    if(err != ErrorCode::SUCCESS) this->printError();
+    this->err = this->getConfigDirectory();
+    if(err != ErrorCode::SUCCESS) printError(err);
+#ifdef DEBUG
     std::cout << "Config directory is: " << this->configFilePath << endl;
+#endif
     
-    err = this->getFile();
-    if(err != ErrorCode::SUCCESS) this->printError();
+    this->err = this->getFile();
+    if(err != ErrorCode::SUCCESS) printError(err);
 
-    err = this->getConfig();
+    this->err = this->getConfig();
 }
 
 Context::~Context(){
@@ -98,9 +98,13 @@ ErrorCode Context::getFile(){
 
         this->configFilePointer = fopen(this->configFilePath, "w");                     //Create the file
         if(this->configFilePointer == NULL) return ErrorCode::UNABLE_TO_CREATE_CONFIG_FILE;
+#ifdef DEBUG
         std::cout << "Config file created" << endl;
+#endif
     }
+#ifdef DEBUG
     std::cout << "Config file opened" << endl;
+#endif
     fclose((FILE*) this->configFilePointer);
     return ErrorCode::SUCCESS;
 }
@@ -138,7 +142,7 @@ ErrorCode Context::getConfig(){
     return ErrorCode::SUCCESS;
 }
 
-void Context::printError(){
-    cerr << "Error: " << hex << (int) err << endl;
-    exit((int) err);
+const char* const Context::getConfigFilePath(void) const{
+    if(this->configFilePath) return (const char* const) this->configFilePath;
+    else return nullptr;
 }

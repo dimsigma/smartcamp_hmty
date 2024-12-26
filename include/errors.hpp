@@ -9,5 +9,10 @@ enum class ErrorCode {
     ENV_XDG_CONFIG_HOME_NOT_SET = 0x03,
     UNABLE_TO_CREATE_CONFIG_FILE = 0x04,
     WIN32_ERROR = 0x05,
+    MISSING_PARAMS = 0x06,
+    INVALID_CONNECTION_STRING = 0x07,
+    INVALID_CA_STRING = 0x08,
     UNKNOWN_ERROR = 0xFF
 };
+
+void printError(ErrorCode err);

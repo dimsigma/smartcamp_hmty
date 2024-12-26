@@ -24,7 +24,9 @@ endif ()
 
 add_executable(smartcamp
         main.cpp
+        src/errors.cpp
         src/Foundation/Context.cpp
+        src/Commands/Config.cpp
 )
 
 if (NOT PLATFORM STREQUAL "Linux")
