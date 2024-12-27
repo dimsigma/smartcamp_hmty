@@ -16,6 +16,7 @@
 
 #include <Foundation/Context.hpp>
 #include <Commands/Config.hpp>
+#include <Commands/Reservation-General-Info.hpp>
 
 int main(int argc, char* argv[]){
     Foundation::Context* cont = Foundation::Context::getInstance();
@@ -28,7 +29,11 @@ int main(int argc, char* argv[]){
     if(!strcmp(argv[1], "config")){
         Commands::Config(argc-2,(char**) &argv[2]); //argc is decreased by 2 and also pass the 3 argument.
     }
-    
+
+    if(!strcmp(argv[1], "res-gen-info")){
+        Commands::ReservationGeneralInfo(argc - 2, (char**) &argv[2]);
+    }
+
     delete cont;
     return (int) ErrorCode::SUCCESS;
 }

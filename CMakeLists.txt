@@ -26,8 +26,8 @@ add_executable(smartcamp
         main.cpp
         src/errors.cpp
         src/Foundation/Context.cpp
-        src/Foundation/db.cpp
         src/Commands/Config.cpp
+        src/Commands/Reservation-General-Info.cpp
 )
 
 if (NOT PLATFORM STREQUAL "Linux")
