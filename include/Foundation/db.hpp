@@ -8,6 +8,10 @@
 #include <mysql/mysql.h>
 #endif
 
+#include <errors.hpp>
+
+#define DB_NAME "smartcamp"
+
 namespace Foundation {
     class db
     {
@@ -27,6 +31,9 @@ namespace Foundation {
             if(instance == nullptr) instance = new db();
             return instance;
         }
+
+        ErrorCode executeSQL(const char* const query, MYSQL_RES** result) const;
+        void freeResult(MYSQL_RES* result) const;
 
         ~db();
     };

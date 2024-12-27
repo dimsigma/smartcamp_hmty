@@ -48,7 +48,7 @@ db::db(){
         }
     }
 
-    if (!mysql_real_connect(this->conn, context->config->ip, context->config->username, (context->config->hasPassword)?(context->config->passwd):(nullptr), "smarty", context->config->port, nullptr, (this->sslConfigExists())?(CLIENT_SSL):(NULL))) {
+    if (!mysql_real_connect(this->conn, context->config->ip, context->config->username, (context->config->hasPassword)?(context->config->passwd):(nullptr), DB_NAME, context->config->port, nullptr, (this->sslConfigExists())?(CLIENT_SSL):(NULL))) {
         fprintf(stderr, "MySQL connection error: %s\n", mysql_error(conn));
         this->err = ErrorCode::MYSQL_REAL_CONNECTION_ERROR;
         printError(this->err);
@@ -78,4 +78,27 @@ bool db::sslConfigExists(void) const {
         strlen(context->config->sslCRT) > 0 &&
         strlen(context->config->sslKEY) > 0
     );
+}
+
+ErrorCode db::executeSQL(const char* const query, MYSQL_RES** result) const {
+    
+    if (mysql_query(this->conn, query)) {
+        std::cerr << "Query failed: " << mysql_error(this->conn) << std::endl;
+        return ErrorCode::MYSQL_QUERY_ERROR;
+    }
+    
+    MYSQL_RES *r = mysql_store_result(this->conn);
+    
+    if (r == nullptr) {
+        std::cerr << "Failed to retrieve result set: " << mysql_error(this->conn) << std::endl;
+        return ErrorCode::MYSQL_STORE_RESULT_ERROR;
+    }
+    
+    *result = r;
+    
+    return ErrorCode::SUCCESS;
+}
+
+void db::freeResult(MYSQL_RES* result) const {
+    mysql_free_result(result);
 }
