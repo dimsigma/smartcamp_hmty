@@ -20,12 +20,14 @@ Commands::Config::Config(const int argc, const char* const argv[]){
 #ifdef DEBUG
         std::cout << "Config: Missing Parameters" << std::endl;
 #endif
+        printError(err);
         return;
     }
 
     if(!strcmp(argv[0], "setserver")){
         if(argc!=2) {
             this->err=ErrorCode::MISSING_PARAMS;
+            printError(err);
             return;
         }
 
@@ -37,6 +39,7 @@ Commands::Config::Config(const int argc, const char* const argv[]){
     if(!strcmp(argv[0], "setCA")){
         if(argc!=2) {
             this->err=ErrorCode::MISSING_PARAMS;
+            printError(err);
             return;
         }
 
@@ -48,6 +51,7 @@ Commands::Config::Config(const int argc, const char* const argv[]){
     if(!strcmp(argv[0], "setCRT")){
         if(argc!=2) {
             this->err=ErrorCode::MISSING_PARAMS;
+            printError(err);
             return;
         }
 
@@ -59,6 +63,7 @@ Commands::Config::Config(const int argc, const char* const argv[]){
     if(!strcmp(argv[0], "setKEY")){
         if(argc!=2) {
             this->err=ErrorCode::MISSING_PARAMS;
+            printError(err);
             return;
         }
 

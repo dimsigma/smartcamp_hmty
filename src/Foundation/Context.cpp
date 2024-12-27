@@ -42,6 +42,9 @@ Context::~Context(){
     free((void*) this->config->ip);
     free((void*) this->config->username);
     free((void*) this->config->passwd);
+    free((void*) this->config->sslCA);
+    free((void*) this->config->sslCRT);
+    free((void*) this->config->sslKEY);
     free((void*) this->config);
 }
 
