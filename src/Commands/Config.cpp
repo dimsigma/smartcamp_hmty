@@ -81,6 +81,10 @@ Commands::Config::Config(const int argc, const char* const argv[]){
         execlp("vim", "vim", context->getConfigFilePath(), NULL);
 #endif
     }
+
+    this->err = ErrorCode::INVALID_PARAMS;
+    printError(this->err);
+    return;
 }
 
 Commands::Config::~Config(){

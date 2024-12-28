@@ -28,6 +28,7 @@ add_executable(smartcamp
         src/Foundation/Context.cpp
         src/Foundation/db.cpp
         src/Commands/Config.cpp
+        src/Commands/TestConnection.cpp
 )
 
 if (NOT PLATFORM STREQUAL "Linux")
