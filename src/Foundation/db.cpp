@@ -1,5 +1,6 @@
 #include <cstdlib>
 #include <iostream>
+#include <iomanip>
 
 #ifdef OS_WINDOWS
 #include <mysql.h>
@@ -101,4 +102,25 @@ ErrorCode db::executeSQL(const char* const query, MYSQL_RES** result) const {
 
 void db::freeResult(MYSQL_RES* result) const {
     mysql_free_result(result);
+}
+
+void db::printResult(MYSQL_RES* res) const {
+    std::cout << "Query Results:" << std::endl;
+    MYSQL_FIELD *fields = mysql_fetch_fields(res);
+    // Print column headers with better spacing
+    for (unsigned int i = 0; i < mysql_num_fields(res); ++i) {
+        std::cout << std::setw(20) << fields[i].name;
+    }
+    std::cout << std::endl;
+    MYSQL_ROW row;
+    while ((row = mysql_fetch_row(res))) {
+        for (unsigned int i = 0; i < mysql_num_fields(res); ++i) {
+            if (row[i]) {
+                std::cout << std::setw(20) << row[i];
+            } else {
+                std::cout << std::setw(20) << "NULL"; // Placeholder for null values
+            }
+        }
+        std::cout << std::endl;
+    }
 }

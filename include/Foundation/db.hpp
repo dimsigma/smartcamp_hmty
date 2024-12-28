@@ -34,6 +34,7 @@ namespace Foundation {
 
         ErrorCode executeSQL(const char* const query, MYSQL_RES** result) const;
         void freeResult(MYSQL_RES* result) const;
+        void printResult(MYSQL_RES* res) const;
 
         inline MYSQL* const getMYSQLcon(void) const {
             return this->conn;
