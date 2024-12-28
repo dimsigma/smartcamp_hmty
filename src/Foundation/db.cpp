@@ -107,7 +107,6 @@ void db::freeResult(MYSQL_RES* result) const {
 void db::printResult(MYSQL_RES* res) const {
     std::cout << "Query Results:" << std::endl;
     MYSQL_FIELD *fields = mysql_fetch_fields(res);
-    // Print column headers with better spacing
     for (unsigned int i = 0; i < mysql_num_fields(res); ++i) {
         std::cout << std::setw(20) << fields[i].name;
     }
@@ -118,7 +117,7 @@ void db::printResult(MYSQL_RES* res) const {
             if (row[i]) {
                 std::cout << std::setw(20) << row[i];
             } else {
-                std::cout << std::setw(20) << "NULL"; // Placeholder for null values
+                std::cout << std::setw(20) << "NULL"; 
             }
         }
         std::cout << std::endl;
