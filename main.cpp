@@ -15,8 +15,10 @@
 #include <errors.hpp>
 
 #include <Foundation/Context.hpp>
+#include <Foundation/db.hpp>
 #include <Commands/Config.hpp>
-#include <Commands/Reservation-General-Info.hpp>
+#include <Commands/TestConnection.hpp>
+#include <Commands/Show.hpp>
 
 int main(int argc, char* argv[]){
     Foundation::Context* cont = Foundation::Context::getInstance();
@@ -30,13 +32,33 @@ int main(int argc, char* argv[]){
         Commands::Config(argc-2,(char**) &argv[2]); //argc is decreased by 2 and also pass the 3 argument.
     }
 
-    if(!strcmp(argv[1], "res-gen-info")){
-        Commands::ReservationGeneralInfo(argc - 2, (char**) &argv[2]);
+    if(!strcmp(argv[1], "test")){
+        Commands::TestConnection(argc-2,(char**) &argv[2]);
+    }
+
+    if(!strcmp(argv[1], "show")){
+        Commands::Show(argc-2,(char**) &argv[2]);
     }
 
     delete cont;
     return (int) ErrorCode::SUCCESS;
 }
+
+/*
+Foundation::db *db = Foundation::db::getInstance();
+    const char* const query = "SELECT * FROM CUSTOMER;";
+    MYSQL_RES *res;
+    db->executeSQL(query, &res);
+    
+    std::cout << "Query Results:" << std::endl;
+    MYSQL_ROW row;
+    while ((row = mysql_fetch_row(res))) {
+        for (unsigned int i = 0; i < mysql_num_fields(res); i++) {
+            if(row[i]) std::cout << row[i] << "\t";
+        }
+        std::cout << std::endl;
+    }
+*/
 
 /*int main() {
     // MySQL result set
