@@ -120,11 +120,11 @@ ErrorCode Context::getConfig(){
     /*const char* const ip = ((string) fileConfig["server"]["ip"].value_or(""sv)).c_str();
     this->config->ip = (char*) malloc(sizeof(ip));
     strcpy(this->config->ip, ip);*/
-    setCharConfigVar(ip, "server", "ip");
+    setStrConfigVar(ip, "server", "ip");
     setIntConfigVar(port, "server", "port");
 
-    setCharConfigVar(username, "user", "username");
-    setCharConfigVar(passwd, "user", "passwd");
+    setStrConfigVar(username, "user", "username");
+    setStrConfigVar(passwd, "user", "passwd");
     this->config->hasPassword = (strcmp(this->config->passwd, "") == 0) ? 0 : 1;
 
     setStrConfigVar(sslCA, "ssl", "ca");

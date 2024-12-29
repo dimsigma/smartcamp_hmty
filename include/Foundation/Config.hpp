@@ -4,7 +4,7 @@
                                                                 this->config->structParam = (char*) malloc((strlen(structParam) * sizeof(char)) + 1); \
                                                                 strcpy(this->config->structParam, structParam);
 
-#define setIntConfigVar(structParam, fileCategory, fileParam)   this->config->structParam = fileConfig[fileCategory][fileParam].value_or(0);
+#define setIntConfigVar(structParam, fileCategory, fileParam)   this->config->structParam = fileConfig[fileCategory][fileParam].value_or(3306);
 
 #define setStrConfigVar(structParam, fileCategory, fileParam)   const std::string structParam = (std::string) fileConfig[fileCategory][fileParam].value_or(""sv); \
                                                                 this->config->structParam = (char*) malloc((strlen(structParam.c_str()) * sizeof(char)) + 1); \
