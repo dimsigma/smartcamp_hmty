@@ -11,7 +11,7 @@ using namespace Commands;
 
 #define showPARKING "SELECT * FROM PARKING_SPOT"
 
-#define showAvailableParking "SELECT PARKING_SPOT.letter, PARKING_SPOT.number FROM PARKING_SPOT WHERE (PARKING_SPOT.letter, PARKING_SPOT.number) NOT IN (SELECT PARKING_SPOT.letter, PARKING_SPOT.number FROM PARKING_SPOT JOIN RESERVED_PARKING ON PARKING_SPOT.letter = RESERVED_PARKING.pletter AND PARKING_SPOT.number = RESERVED_PARKING.pnumber JOIN RESERVATION ON RESERVATION.ruid = RESERVED_PARKING.ruid WHERE RESERVATION.checkin_date <= '%s' OR RESERVATION.checkout_date >= '%s');"
+#define showAvailableParking "SELECT PARKING_SPOT.letter, PARKING_SPOT.number FROM PARKING_SPOT WHERE (PARKING_SPOT.letter, PARKING_SPOT.number) NOT IN (SELECT PARKING_SPOT.letter, PARKING_SPOT.number FROM PARKING_SPOT JOIN RESERVED_PARKING ON PARKING_SPOT.letter = RESERVED_PARKING.pletter AND PARKING_SPOT.number = RESERVED_PARKING.pnumber JOIN RESERVATION ON RESERVATION.ruid = RESERVED_PARKING.ruid WHERE (RESERVATION.checkin_date <= '%s' AND RESERVATION.checkout_date >= '%s') OR (RESERVATION.checkin_date >= '%s' AND RESERVATION.checkout_date <= '%s') OR (RESERVATION.checkin_date <= '%s' AND RESERVATION.checkout_date <= '%s' AND RESERVATION.checkout_date >= '%s') OR (RESERVATION.checkin_date >= '%s' AND RESERVATION.checkin_date <= '%s' AND RESERVATION.checkout_date >= '%s'));"
 
 ErrorCode Show::parking(const int argc, const char* const argv[]){
 
@@ -66,8 +66,8 @@ ErrorCode Show::parking(const int argc, const char* const argv[]){
     if(argc < 3) return ErrorCode::MISSING_PARAMS;
 
     if((!strcmp(argv[0], "--date")) && argc == 3){
-        sql = (char*) malloc((strlen(showAvailableParking) * sizeof(char)) + (strlen(argv[1]) * sizeof(char)) + (strlen(argv[2]) * sizeof(char)) + 1);
-        sprintf(sql, showAvailableParking, argv[1], argv[2]);
+        sql = (char*) malloc((strlen(showAvailableParking) * sizeof(char)) + 5*(strlen(argv[1]) * sizeof(char)) + 5*(strlen(argv[2]) * sizeof(char)) + 1);
+        sprintf(sql, showAvailableParking, argv[1], argv[2], argv[1], argv[2], argv[1], argv[2], argv[1], argv[1], argv[2], argv[2]);
         goto parkingSQLExec;
     }
 

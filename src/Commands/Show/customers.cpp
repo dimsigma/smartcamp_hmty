@@ -28,11 +28,33 @@ ErrorCode Show::customers(const int argc, const char* const argv[]){
 
     if(argc < 2) return ErrorCode::MISSING_PARAMS;
 
-    //--name
-    if((!strcmp(argv[0], "--name")) && argc == 2){
+    //--byname
+    if((!strcmp(argv[0], "--byname")) && argc == 2){
         char* where_part = "CUSTOMER.first_name REGEXP '%s' OR CUSTOMER.middle_name REGEXP '%s' OR CUSTOMER.last_name REGEXP '%s'";
         char* where = (char*) malloc((strlen(where_part) * sizeof(char)) + 3*(strlen(argv[1]) * sizeof(char)) + 1);
         sprintf(where, where_part, argv[1], argv[1], argv[1]);
+        sql = (char*) malloc((strlen(this->showCustomersSQL) * sizeof(char)) + (strlen(where) * sizeof(char)) + 1);
+        sprintf(sql, this->showCustomersSQL, where);
+        free(where);
+        goto customersSQLExec;
+    }
+
+    //--bycuid
+    if((!strcmp(argv[0], "--bycuid")) && argc == 2){
+        char* where_part = "CUSTOMER.cuid = '%s'";
+        char* where = (char*) malloc((strlen(where_part) * sizeof(char)) + (strlen(argv[1]) * sizeof(char)) + 1);
+        sprintf(where, where_part, argv[1]);
+        sql = (char*) malloc((strlen(this->showCustomersSQL) * sizeof(char)) + (strlen(where) * sizeof(char)) + 1);
+        sprintf(sql, this->showCustomersSQL, where);
+        free(where);
+        goto customersSQLExec;
+    }
+
+    //--byruid
+    if((!strcmp(argv[0], "--byruid")) && argc == 2){
+        char* where_part = "RESERVATION.ruid = '%s'";
+        char* where = (char*) malloc((strlen(where_part) * sizeof(char)) + (strlen(argv[1]) * sizeof(char)) + 1);
+        sprintf(where, where_part, argv[1]);
         sql = (char*) malloc((strlen(this->showCustomersSQL) * sizeof(char)) + (strlen(where) * sizeof(char)) + 1);
         sprintf(sql, this->showCustomersSQL, where);
         free(where);

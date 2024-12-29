@@ -45,6 +45,12 @@ Show::Show(const int argc, const char* const argv[]) {
         if(err != ErrorCode::SUCCESS) printError(err);
         return;
     }
+
+        if(!strcmp(argv[0], "accommodation")){
+        this->err = this->accommodation(argc-1, (char **) &argv[1]);
+        if(err != ErrorCode::SUCCESS) printError(err);
+        return;
+    }
 }
 
 Show::~Show() {}

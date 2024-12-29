@@ -35,6 +35,7 @@ add_executable(smartcamp
         src/Commands/Show/payments.cpp
         src/Commands/Show/services.cpp
         src/Commands/Show/parking.cpp
+        src/Commands/Show/accommodation.cpp
 )
 
 if (NOT PLATFORM STREQUAL "Linux")

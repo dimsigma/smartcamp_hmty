@@ -83,6 +83,10 @@ bool db::sslConfigExists(void) const {
 
 ErrorCode db::executeSQL(const char* const query, MYSQL_RES** result) const {
     
+#ifdef DEBUG
+    std::cout << query << std::endl;
+#endif
+
     if (mysql_query(this->conn, query)) {
         std::cerr << "Query failed: " << mysql_error(this->conn) << std::endl;
         return ErrorCode::MYSQL_QUERY_ERROR;
