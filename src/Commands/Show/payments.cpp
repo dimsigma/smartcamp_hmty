@@ -9,6 +9,8 @@
 
 using namespace Commands;
 
+#define paymentsUNPAID "SELECT RESERVATION.ruid, RESERVATION.total_cost, SUM(PAYMENT.amount) AS total_paid FROM RESERVATION JOIN CUSTOMER ON RESERVATION.main_cuid = CUSTOMER.cuid LEFT OUTER JOIN PAYMENT ON PAYMENT.ruid = RESERVATION.ruid WHERE 1 GROUP BY RESERVATION.ruid HAVING RESERVATION.total_cost > SUM(PAYMENT.amount) OR SUM(PAYMENT.amount) IS NULL;"
+
 ErrorCode Show::payments(const int argc, const char* const argv[]){
 
     char *sql = nullptr;

@@ -34,6 +34,23 @@ Show::Show(const int argc, const char* const argv[]) {
         return;
     }
 
+    if(!strcmp(argv[0], "services")){
+        this->err = this->services(argc-1, (char **) &argv[1]);
+        if(err != ErrorCode::SUCCESS) printError(err);
+        return;
+    }
+
+    if(!strcmp(argv[0], "parking")){
+        this->err = this->parking(argc-1, (char **) &argv[1]);
+        if(err != ErrorCode::SUCCESS) printError(err);
+        return;
+    }
+
+        if(!strcmp(argv[0], "accommodation")){
+        this->err = this->accommodation(argc-1, (char **) &argv[1]);
+        if(err != ErrorCode::SUCCESS) printError(err);
+        return;
+    }
 }
 
 Show::~Show() {}
