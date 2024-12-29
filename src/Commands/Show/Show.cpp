@@ -46,8 +46,20 @@ Show::Show(const int argc, const char* const argv[]) {
         return;
     }
 
-        if(!strcmp(argv[0], "accommodation")){
+    if(!strcmp(argv[0], "accommodation")){
         this->err = this->accommodation(argc-1, (char **) &argv[1]);
+        if(err != ErrorCode::SUCCESS) printError(err);
+        return;
+    }
+
+    if(!strcmp(argv[0], "spotclass")){
+        this->err = this->spot_class(argc-1, (char **) &argv[1]);
+        if(err != ErrorCode::SUCCESS) printError(err);
+        return;
+    }
+
+    if(!strcmp(argv[0], "spotclasscount")){
+        this->err = this->spot_class_count(argc-1, (char **) &argv[1]);
         if(err != ErrorCode::SUCCESS) printError(err);
         return;
     }
