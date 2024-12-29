@@ -25,6 +25,8 @@ namespace Commands {
         const char* const showParkingSQL = "SELECT RESERVED_PARKING.*, RESERVATION.checkin_date, RESERVATION.checkout_date, CUSTOMER.* FROM PARKING_SPOT JOIN RESERVED_PARKING ON PARKING_SPOT.letter = RESERVED_PARKING.pletter AND PARKING_SPOT.number = RESERVED_PARKING.pnumber JOIN RESERVATION ON RESERVATION.ruid = RESERVED_PARKING.ruid JOIN CUSTOMER ON RESERVATION.main_cuid = CUSTOMER.cuid WHERE %s;";
         const char* const showAllAccommodationSQL = "SELECT ACCOMODATION_SPOT.*, SPOT_CLASS.cost FROM ACCOMODATION_SPOT JOIN SPOT_CLASS ON ACCOMODATION_SPOT.class_name = SPOT_CLASS.class_name AND ACCOMODATION_SPOT.class_type = SPOT_CLASS.class_type AND ((SPOT_CLASS.start_date <= CURDATE() AND SPOT_CLASS.end_date >= CURDATE()) OR (SPOT_CLASS.start_date > SPOT_CLASS.end_date AND (CURDATE() >= SPOT_CLASS.start_date OR CURDATE() <= SPOT_CLASS.end_date))) %s WHERE %s ORDER BY ACCOMODATION_SPOT.suid";
         const char* const showAccommodationSQL = "SELECT ACCOMODATION_SPOT.*, %s RESERVATION.*, CUSTOMER.first_name, CUSTOMER.middle_name, CUSTOMER.last_name FROM RESERVATION JOIN CUSTOMER ON RESERVATION.main_cuid = CUSTOMER.cuid NATURAL JOIN RESERVED_SPOT NATURAL JOIN ACCOMODATION_SPOT JOIN SPOT_CLASS ON ACCOMODATION_SPOT.class_name = SPOT_CLASS.class_name AND ACCOMODATION_SPOT.class_type = SPOT_CLASS.class_type AND ((SPOT_CLASS.start_date <= CURDATE() AND SPOT_CLASS.end_date >= CURDATE()) OR (SPOT_CLASS.start_date > SPOT_CLASS.end_date AND (CURDATE() >= SPOT_CLASS.start_date OR CURDATE() <= SPOT_CLASS.end_date))) %s WHERE %s ORDER BY RESERVATION.checkin_date ASC;";
+        const char* const showSpotClassSQL = "SELECT SPOT_CLASS.class_name, SPOT_CLASS.class_type, SPOT_CLASS.season, SPOT_CLASS.cost, SPOT_CLASS.description, SPOT_CLASS.start_date, SPOT_CLASS.end_date, COUNT(ACCOMODATION_SPOT.suid) AS all_spots FROM SPOT_CLASS NATURAL JOIN ACCOMODATION_SPOT WHERE %s GROUP BY SPOT_CLASS.class_name, SPOT_CLASS.class_type, SPOT_CLASS.season, SPOT_CLASS.cost, SPOT_CLASS.description, SPOT_CLASS.start_date, SPOT_CLASS.end_date;";
+        const char* const showSpotClassCountSQL = "SELECT SPOT_CLASS.class_name, SPOT_CLASS.class_type, COUNT(ACCOMODATION_SPOT.suid) AS all_spots FROM SPOT_CLASS NATURAL JOIN ACCOMODATION_SPOT WHERE %s GROUP BY SPOT_CLASS.class_name, SPOT_CLASS.class_type;";
 
         ErrorCode reservations(const int argc, const char* const argv[]);
         ErrorCode customers(const int argc, const char* const argv[]);
@@ -32,6 +34,8 @@ namespace Commands {
         ErrorCode services(const int argc, const char* const argv[]);
         ErrorCode parking(const int argc, const char* const argv[]);
         ErrorCode accommodation(const int argc, const char* const argv[]);
+        ErrorCode spot_class(const int argc, const char* const argv[]);
+        ErrorCode spot_class_count(const int argc, const char* const argv[]);
     public:
         Show(const int argc, const char* const argv[]);
         ~Show();
