@@ -76,7 +76,7 @@ else ()
 endif()
 
 target_include_directories(smartcamp PRIVATE
-        "./external/tomlplusplus/include"
+        #"./external/tomlplusplus/include"
         "./include"
 )
 
