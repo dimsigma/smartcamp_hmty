@@ -55,8 +55,8 @@ ErrorCode Show::customers(const int argc, const char* const argv[]){
         char* where_part = "RESERVATION.ruid = '%s'";
         char* where = (char*) malloc((strlen(where_part) * sizeof(char)) + (strlen(argv[1]) * sizeof(char)) + 1);
         sprintf(where, where_part, argv[1]);
-        sql = (char*) malloc((strlen(this->showCustomersSQL) * sizeof(char)) + (strlen(where) * sizeof(char)) + 1);
-        sprintf(sql, this->showCustomersSQL, where);
+        sql = (char*) malloc((strlen(this->showCustomersWithoutTotalReservationsSQL) * sizeof(char)) + (strlen(where) * sizeof(char)) + 1);
+        sprintf(sql, this->showCustomersWithoutTotalReservationsSQL, where);
         free(where);
         goto customersSQLExec;
     }

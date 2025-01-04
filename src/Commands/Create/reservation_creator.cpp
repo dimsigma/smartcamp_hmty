@@ -18,7 +18,9 @@ ErrorCode createReservationEntry(Commands::ReservationData *rd, int defaultCost,
     //std::cin.clear(); std::cin.sync();
     std::getline(std::cin, input);
     try {inputCost = std::stoi(input); } catch (...) { inputCost = defaultTotal; }
+#ifdef DEBUG
     std::cout << inputCost << std::endl;
+#endif
 
     std::ostringstream sql;
     sql << "INSERT INTO RESERVATION (total_cost, checkin_date, checkout_date, main_cuid) VALUES (" << inputCost << ", '" << rd->checkinData << "', '" << rd->checkoutData << "', " << cuids[0] << ");";
@@ -38,7 +40,7 @@ ErrorCode createReservationEntry(Commands::ReservationData *rd, int defaultCost,
 
     MYSQL_ROW row = mysql_fetch_row(res);
     int id = atoi(row[0]);
-    std::cout << id << std::endl;
+    std::cout << std::endl << "ruid is: " << id << std::endl << std::endl;
 
     if(id == 0) {
         return ErrorCode::INSERT_FAILED;
@@ -66,28 +68,34 @@ ErrorCode createContainedCustomer(Commands::ReservationData *rd, int *cuids, int
 
 ErrorCode createReservedSpot(Commands::ReservationData *rd, int suid, int ruid){
     Foundation::db *db = Foundation::db::getInstance();
+    std::cout << "Reserved spots: ";
     for(int i = 0; i < rd->spots; i++){
         std::ostringstream sql;
         sql << "INSERT INTO RESERVED_SPOT (ruid, suid) VALUES (" << ruid << ", " << suid+i << ");";
         
         ErrorCode sqlerr = db->executeSQL(sql.str().c_str());
+        std::cout << suid + i << " ";
         if(sqlerr != ErrorCode::SUCCESS){
             return sqlerr;
         }
     }
+    std::cout << std::endl << std::endl;
     return ErrorCode::SUCCESS;
 }
 
 ErrorCode createReservedParking(int actualParkingSpots, Commands::PARKING_SPOT *spots, int ruid){
     Foundation::db *db = Foundation::db::getInstance();
+    std::cout << "Reserved parking: ";
     for(int i = 0; i < actualParkingSpots; i++){
         std::ostringstream sql;
         sql << "INSERT INTO RESERVED_PARKING (ruid, pletter, pnumber) VALUES (" << ruid << ", '" << spots[i].letters << "', " << spots[i].number << ");";
         
         ErrorCode sqlerr = db->executeSQL(sql.str().c_str());
+        std::cout << spots[i].letters << spots[i].number << " ";
         if(sqlerr != ErrorCode::SUCCESS){
             return sqlerr;
         }
     }
+    std::cout << std::endl << std::endl;
     return ErrorCode::SUCCESS;
 }

@@ -18,6 +18,7 @@ ErrorCode getAvailParking(Commands::ReservationData *rd, Commands::PARKING_SPOT 
 
     ErrorCode sqlerr = db->executeSQL(sql, &res);
     if(sqlerr != ErrorCode::SUCCESS) return sqlerr;
+    std::cout << "Found Parking spots: " << std::endl;
     db->printResult(res);
     db->freeResult(res);
 
@@ -39,5 +40,6 @@ ErrorCode getAvailParking(Commands::ReservationData *rd, Commands::PARKING_SPOT 
     *actualParking = i;
 
     free(sql);
+    std::cout << std::endl;
     return ErrorCode::SUCCESS;
 }

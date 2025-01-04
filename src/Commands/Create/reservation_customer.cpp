@@ -33,7 +33,7 @@ ErrorCode handleCustomer(int *cuid){
     } else {
         std::cout << "Invalid choice. Please run the program again." << std::endl;
     }
-
+    std::cout << std::endl;
     return ErrorCode::SUCCESS;
 }
 
@@ -121,7 +121,9 @@ ErrorCode handleExistingCustomer(int *cuid){
 
     MYSQL_ROW row = mysql_fetch_row(res);
     int c = atoi(row[0]);
+#ifdef DEBUG
     std::cout << c << std::endl;
+#endif
 
     if(c == 0) {
         return ErrorCode::INSERT_FAILED;

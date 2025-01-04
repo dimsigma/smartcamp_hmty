@@ -11,10 +11,14 @@
 
 ErrorCode getAccommodationGroupId(Commands::ReservationData *rd, const char* const tmpl, int *suid, int *defaultCost){
     char *sql;
-    sql = (char*) malloc((strlen(tmpl) + 6*strlen(rd->checkinData) + 6*strlen(rd->checkinData) + 2*(strlen(std::to_string(rd->spots).c_str()))) * sizeof(char));
+    sql = (char*) malloc((strlen(tmpl) + 8*strlen(rd->checkinData) + 8*strlen(rd->checkinData) + 2*(strlen(std::to_string(rd->spots).c_str()))) * sizeof(char));
 
     sprintf(sql, tmpl,
                 rd->checkoutData,
+                rd->checkinData,
+                rd->checkinData,
+                rd->checkinData,
+                rd->checkinData,
                 rd->checkinData,
                 rd->checkinData,
                 rd->checkoutData,
@@ -35,6 +39,7 @@ ErrorCode getAccommodationGroupId(Commands::ReservationData *rd, const char* con
     ErrorCode sqlerr = db->executeSQL(sql, &res);
     if(sqlerr != ErrorCode::SUCCESS) return sqlerr;
 
+    std::cout << "Select the spot(s) by group_id." << std::endl;
     db->printResult(res);
     db->freeResult(res);
 
@@ -65,5 +70,6 @@ ErrorCode getAccommodationGroupId(Commands::ReservationData *rd, const char* con
 
     db->freeResult(res);
     free(sql);
+    std::cout << std::endl;
     return ErrorCode::GROUPID_NOT_FOUND;
 }

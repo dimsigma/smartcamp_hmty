@@ -17,7 +17,7 @@ using namespace Commands;
 #define accommodationTENTselect "TENT_SPACE.size, TENT_SPACE.terrain_type,"
 #define accommodationBUNGALOWselect "BUNGALOW.max_persons,"
 
-#define accommodationAvailBetweenDates "SELECT ACCOMODATION_SPOT.*, %s SPOT_CLASS.cost, DATEDIFF('%s', '%s')*SPOT_CLASS.cost AS total_cost FROM ACCOMODATION_SPOT %s JOIN SPOT_CLASS ON ACCOMODATION_SPOT.class_name = SPOT_CLASS.class_name AND ACCOMODATION_SPOT.class_type = SPOT_CLASS.class_type AND ((SPOT_CLASS.start_date <= CURDATE() AND SPOT_CLASS.end_date >= CURDATE()) OR (SPOT_CLASS.start_date > SPOT_CLASS.end_date AND (CURDATE() >= SPOT_CLASS.start_date OR CURDATE() <= SPOT_CLASS.end_date))) NATURAL LEFT OUTER JOIN RESERVED_SPOT NATURAL LEFT OUTER JOIN RESERVATION WHERE (not ((RESERVATION.checkin_date <= '%s' AND RESERVATION.checkout_date >= '%s') OR (RESERVATION.checkin_date >= '%s' AND RESERVATION.checkout_date <= '%s') OR (RESERVATION.checkin_date <= '%s' AND RESERVATION.checkout_date <= '%s' AND RESERVATION.checkout_date >= '%s') OR (RESERVATION.checkin_date >= '%s' AND RESERVATION.checkin_date <= '%s' AND RESERVATION.checkout_date >= '%s'))) OR RESERVATION.ruid IS NULL ORDER BY ACCOMODATION_SPOT.suid ASC;"
+#define accommodationAvailBetweenDates "SELECT ACCOMODATION_SPOT.*, %s SPOT_CLASS.cost, DATEDIFF('%s', '%s')*SPOT_CLASS.cost AS total_cost FROM ACCOMODATION_SPOT %s JOIN SPOT_CLASS ON ACCOMODATION_SPOT.class_name = SPOT_CLASS.class_name AND ACCOMODATION_SPOT.class_type = SPOT_CLASS.class_type AND ((SPOT_CLASS.start_date <= CONCAT('1970-', DATE_FORMAT('%s', '%%m-%%d')) AND SPOT_CLASS.end_date >= CONCAT('1970-', DATE_FORMAT('%s', '%%m-%%d'))) OR (SPOT_CLASS.start_date > SPOT_CLASS.end_date AND (CONCAT('1970-', DATE_FORMAT('%s', '%%m-%%d')) >= SPOT_CLASS.start_date OR CONCAT('1970-', DATE_FORMAT('%s', '%%m-%%d')) <= SPOT_CLASS.end_date))) WHERE NOT EXISTS ( SELECT * FROM RESERVED_SPOT NATURAL JOIN RESERVATION WHERE ((RESERVATION.checkin_date <= '%s' AND RESERVATION.checkout_date >= '%s') OR (RESERVATION.checkin_date >= '%s' AND RESERVATION.checkout_date <= '%s') OR (RESERVATION.checkin_date <= '%s' AND RESERVATION.checkout_date <= '%s' AND RESERVATION.checkout_date >= '%s') OR (RESERVATION.checkin_date >= '%s' AND RESERVATION.checkin_date <= '%s' AND RESERVATION.checkout_date >= '%s')) AND RESERVED_SPOT.suid = ACCOMODATION_SPOT.suid) ORDER BY  ACCOMODATION_SPOT.suid ASC;"
 
 ErrorCode Show::accommodation(const int argc, const char* const argv[]){
 
@@ -95,8 +95,8 @@ ErrorCode Show::accommodation(const int argc, const char* const argv[]){
     if(argc < 4) return ErrorCode::MISSING_PARAMS;
 
     if((!strcmp(argv[1], "--date")) && argc == 4){
-        sql = (char*) malloc((strlen(accommodationAvailBetweenDates) * sizeof(char)) + (strlen(select_statement) * sizeof(char)) + (strlen(join_statement) * sizeof(char)) + 6*(strlen(argv[2]) * sizeof(char)) + 6*(strlen(argv[3]) * sizeof(char)) + 1);
-        sprintf(sql, accommodationAvailBetweenDates, select_statement, argv[3], argv[2], join_statement, argv[2], argv[3], argv[2], argv[3], argv[2], argv[3], argv[2], argv[2], argv[3], argv[3]);
+        sql = (char*) malloc((strlen(accommodationAvailBetweenDates) * sizeof(char)) + (strlen(select_statement) * sizeof(char)) + (strlen(join_statement) * sizeof(char)) + (6+4)*(strlen(argv[2]) * sizeof(char)) + 6*(strlen(argv[3]) * sizeof(char)) + 1);
+        sprintf(sql, accommodationAvailBetweenDates, select_statement, argv[3], argv[2], join_statement, argv[2], argv[2], argv[2], argv[2], argv[2], argv[3], argv[2], argv[3], argv[2], argv[3], argv[2], argv[2], argv[3], argv[3]);
         goto accSQLExec;
     }
 

@@ -13,7 +13,7 @@ using namespace Commands;
 #define WBUNGALOW "SPOT_CLASS.class_type = 'BUNGALOW'"
 #define WRV "SPOT_CLASS.class_type = 'RV'"
 
-#define activeSpotClass " AND ((SPOT_CLASS.start_date <= CURDATE() AND SPOT_CLASS.end_date >= CURDATE()) OR (SPOT_CLASS.start_date > SPOT_CLASS.end_date AND (CURDATE() >= SPOT_CLASS.start_date OR CURDATE() <= SPOT_CLASS.end_date)))"
+#define activeSpotClass " AND ((SPOT_CLASS.start_date <= CONCAT('1970-', DATE_FORMAT(CURDATE(), '%m-%%d')) AND SPOT_CLASS.end_date >= CONCAT('1970-', DATE_FORMAT(CURDATE(), '%m-%%d'))) OR (SPOT_CLASS.start_date > SPOT_CLASS.end_date AND (CONCAT('1970-', DATE_FORMAT(CURDATE(), '%m-%%d')) >= SPOT_CLASS.start_date OR CONCAT('1970-', DATE_FORMAT(CURDATE(), '%m-%%d')) <= SPOT_CLASS.end_date)))"
 #define dateSpotClass " AND ((SPOT_CLASS.start_date <= '%s' AND SPOT_CLASS.end_date >= '%s') OR (SPOT_CLASS.start_date > SPOT_CLASS.end_date AND ('%s' >= SPOT_CLASS.start_date OR '%s' <= SPOT_CLASS.end_date)))"
 
 ErrorCode Show::spot_class(const int argc, const char* const argv[]){
