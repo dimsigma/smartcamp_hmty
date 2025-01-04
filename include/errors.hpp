@@ -1,6 +1,6 @@
 #pragma once
 
-//#define DEBUG
+#define DEBUG
 
 enum class ErrorCode {
     SUCCESS = 0x00,

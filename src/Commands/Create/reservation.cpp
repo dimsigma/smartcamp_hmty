@@ -32,6 +32,8 @@ ErrorCode Create::reservation(const int argc, const char* const argv[]){
     data->parking = atoi(argv[4]);
 
     if(data->people == 0 || data->spots == 0) return ErrorCode::INVALID_PARAMS;
+    if(data->people < data->spots) return ErrorCode::INVALID_PARAMS;
+    if(data->people < data->parking) return ErrorCode::INVALID_PARAMS;
 
     int* cuids = (int*) malloc(data->people * sizeof(int)); //Important
 
