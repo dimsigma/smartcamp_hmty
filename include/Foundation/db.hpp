@@ -33,6 +33,7 @@ namespace Foundation {
         }
 
         ErrorCode executeSQL(const char* const query, MYSQL_RES** result) const;
+        ErrorCode executeSQL_nores(const char* const query) const;
         void freeResult(MYSQL_RES* result) const;
         void printResult(MYSQL_RES* res) const;
 

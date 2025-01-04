@@ -51,13 +51,11 @@ namespace Commands {
         "JOIN ACCOMODATION_SPOT AS acc_s ON res_s.suid = acc_s.suid "
         "JOIN SPOT_CLASS AS sp_c ON (acc_s.class_name = sp_c.class_name AND acc_s.class_type = sp_c.class_type) "
         "WHERE res.ruid = %s;";
-        const char* const ReservationServices_byruid = "SELECT ser.name "
+        const char* const ReservationServices_byruid = "SELECT inc_ser.name "
         "FROM RESERVATION AS res JOIN INCLUDED_SERVICE AS inc_ser ON res.ruid = inc_ser.ruid "
-        "JOIN SERVICE AS ser ON inc_ser.service_name = ser.name "
         "WHERE res.ruid = %s;";
-        const char* const ReservationParking_byruid = "SELECT park_s.letter, park_s.number "
+        const char* const ReservationParking_byruid = "SELECT res_p.pletter, res_p.pnumber "
         "FROM RESERVATION AS res JOIN RESERVED_PARKING AS res_p ON res.ruid = res_p.ruid "
-        "JOIN PARKING_SPOT AS park_s ON (res_p.pletter = park_s.letter AND res_p.pnumber = park_s.number) "
         "WHERE res.ruid = %s;";
         const char* const ReservationPayment_byruid = "SELECT pay.puid, pay.method, pay.amount, pay.date "
         "FROM RESERVATION AS res JOIN PAYMENT AS pay ON res.ruid = pay.ruid "
@@ -74,14 +72,12 @@ namespace Commands {
         "JOIN ACCOMODATION_SPOT AS acc_s ON res_s.suid = acc_s.suid "
         "JOIN SPOT_CLASS AS sp_c ON (acc_s.class_name = sp_c.class_name AND acc_s.class_type = sp_c.class_type) "
         "WHERE res_s.suid = %s AND res.checkin_date <= GETDATE() AND res.checkout_date > GETDATE();";
-        const char* const ReservationServices_bysuid = "SELECT ser.name "
+        const char* const ReservationServices_bysuid = "SELECT inc_ser.service_name "
         "FROM RESERVATION AS res JOIN INCLUDED_SERVICE AS inc_ser ON res.ruid = inc_ser.ruid "
-        "JOIN SERVICE AS ser ON inc_ser.service_name = ser.name "
         "JOIN RESERVED_SPOT AS res_s ON res.ruid = res_s.ruid "
         "WHERE res_s.suid = %s AND res.checkin_date <= GETDATE() AND res.checkout_date > GETDATE();";
-        const char* const ReservationParking_bysuid = "SELECT park_s.letter, park_s.number "
+        const char* const ReservationParking_bysuid = "SELECT res_p.pletter, res_p.pnumber "
         "FROM RESERVATION AS res JOIN RESERVED_PARKING AS res_p ON res.ruid = res_p.ruid "
-        "JOIN PARKING_SPOT AS park_s ON (res_p.pletter = park_s.letter AND res_p.pnumber = park_s.number) "
         "JOIN RESERVED_SPOT AS res_s ON res.ruid = res_s.ruid "
         "WHERE res_s.suid = %s AND res.checkin_date <= GETDATE() AND res.checkout_date > GETDATE();";
         const char* const ReservationPayment_bysuid = "SELECT pay.puid, pay.method, pay.amount, pay.date "

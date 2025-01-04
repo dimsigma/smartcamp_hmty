@@ -20,6 +20,7 @@
 #include <Commands/TestConnection.hpp>
 #include <Commands/Show.hpp>
 #include <Commands/Describe.hpp>
+#include <Commands/Update.hpp>
 
 int main(int argc, char* argv[]){
     Foundation::Context* cont = Foundation::Context::getInstance();
@@ -43,6 +44,10 @@ int main(int argc, char* argv[]){
 
     if(!strcmp(argv[1], "describe")){
         Commands::Describe(argc-2, (char **) &argv[2]);
+    }
+
+    if(!strcmp(argv[1], "update")){
+        Commands::Update(argc-2, (char **) &argv[2]);
     }
 
     delete cont;
