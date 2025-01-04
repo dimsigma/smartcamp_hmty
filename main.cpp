@@ -19,6 +19,7 @@
 #include <Commands/Config.hpp>
 #include <Commands/TestConnection.hpp>
 #include <Commands/Show.hpp>
+#include <Commands/Create.hpp>
 
 int main(int argc, char* argv[]){
     Foundation::Context* cont = Foundation::Context::getInstance();
@@ -38,6 +39,10 @@ int main(int argc, char* argv[]){
 
     if(!strcmp(argv[1], "show")){
         Commands::Show(argc-2,(char**) &argv[2]);
+    }
+
+    if(!strcmp(argv[1], "create")){
+        Commands::Create(argc-2,(char**) &argv[2]);
     }
 
     delete cont;
