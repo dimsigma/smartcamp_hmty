@@ -45,7 +45,8 @@ jobs:
     - name: Upload Artifacts
       uses: actions/upload-artifact@v3
       with:
-        name: smartcamp
+        name: smartcamp.exe
         path: ${{github.workspace}}\artifacts
+      if: runner.os == 'Windows'
       
 
