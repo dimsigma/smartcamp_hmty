@@ -54,11 +54,16 @@ ErrorCode Describe::reservationAccomodation(const int argc, const char* const ar
 
     char *sql = nullptr;
 
+    const char* const l1 = "6";
+    const char* const l2 = "8";
+    const char* const s1 = "WINTER";
+    const char* const s2 = "SUMMER";
+
     if(argc < 2) return ErrorCode::MISSING_PARAMS;
 
     if((!strcmp(argv[0], "--byruid")) && argc == 2){
-        sql = (char *) malloc((strlen(this->ReservationAccomodation_byruid) * sizeof(char)) + (strlen(argv[1]) * sizeof(char)) + 1);
-        sprintf(sql, this->ReservationAccomodation_byruid, argv[1]);
+        sql = (char *) malloc((strlen(this->ReservationAccomodation_byruid) * sizeof(char)) + (strlen(argv[1]) * sizeof(char)) + (strlen(l1) * sizeof(char)) + (strlen(l2) * sizeof(char)) + (strlen(s1) * sizeof(char)) + (strlen(s2) * sizeof(char)) + 1);
+        sprintf(sql, this->ReservationAccomodation_byruid, argv[1], l1, l2, s1, s2);
         goto accomodationSQLExec;
     }
 

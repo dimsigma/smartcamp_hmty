@@ -38,7 +38,7 @@ namespace Commands {
         "FROM RESERVATION AS res JOIN RESERVED_SPOT AS res_s ON res.ruid = res_s.ruid "
         "JOIN ACCOMODATION_SPOT AS acc_s ON res_s.suid = acc_s.suid "
         "JOIN SPOT_CLASS AS sp_c ON (acc_s.class_name = sp_c.class_name AND acc_s.class_type = sp_c.class_type) "
-        "WHERE res.ruid = %s;";
+        "WHERE res.ruid = %s AND sp_c.season = IF(MONTH(res.checkin_date) < %s OR MONTH(res.checkin_date) > %s, '%s', '%s');";
         const char* const ReservationAccomodation_add = "INSERT INTO RESERVED_SPOT(ruid, suid) VALUES (%s, %s);";
         const char* const ReservationAccomodation_delete = "DELETE FROM RESERVED_SPOT WHERE ruid = %s AND suid = %s;";
 

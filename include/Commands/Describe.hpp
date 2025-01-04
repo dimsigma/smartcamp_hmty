@@ -50,7 +50,7 @@ namespace Commands {
         "FROM RESERVATION AS res JOIN RESERVED_SPOT AS res_s ON res.ruid = res_s.ruid "
         "JOIN ACCOMODATION_SPOT AS acc_s ON res_s.suid = acc_s.suid "
         "JOIN SPOT_CLASS AS sp_c ON (acc_s.class_name = sp_c.class_name AND acc_s.class_type = sp_c.class_type) "
-        "WHERE res.ruid = %s;";
+        "WHERE res.ruid = %s AND sp_c.season = IF(MONTH(res.checkin_date) < %s OR MONTH(res.checkin_date) > %s, '%s', '%s');";
         const char* const ReservationServices_byruid = "SELECT inc_ser.name "
         "FROM RESERVATION AS res JOIN INCLUDED_SERVICE AS inc_ser ON res.ruid = inc_ser.ruid "
         "WHERE res.ruid = %s;";

@@ -35,7 +35,7 @@ ErrorCode Describe::customerGeneral(const int argc, const char* const argv[])
     }
 
     if((!strcmp(argv[0], "--byname")) && argc == 3){
-        sql = (char *) malloc((strlen(this->CustomerGeneral_byname) * sizeof(char)) + (strlen(argv[1]) * sizeof(char)) + 1);
+        sql = (char *) malloc((strlen(this->CustomerGeneral_byname) * sizeof(char)) + (strlen(argv[1]) * sizeof(char)) + (strlen(argv[2]) * sizeof(char)) + 1);
         sprintf(sql, this->CustomerGeneral_byname, argv[1], argv[2]);
         goto generalSQLExec;
     }
@@ -87,7 +87,7 @@ ErrorCode Describe::customerReservation(const int argc, const char* const argv[]
     }
 
     if((!strcmp(argv[0], "--byname")) && argc == 3){
-        sql = (char *) malloc((strlen(this->CustomerReservation_byname) * sizeof(char)) + (strlen(argv[1]) * sizeof(char)) + 1);
+        sql = (char *) malloc((strlen(this->CustomerReservation_byname) * sizeof(char)) + (strlen(argv[1]) * sizeof(char)) + (strlen(argv[2]) * sizeof(char)) + 1);
         sprintf(sql, this->CustomerReservation_byname, argv[1], argv[2]);
         goto reservationSQLExec;
     }
