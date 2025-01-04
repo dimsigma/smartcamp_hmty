@@ -22,6 +22,7 @@ enum class ErrorCode {
     MYSQL_STORE_RESULT_ERROR = 0x10,
     INSERT_FAILED = 0x11,
     GROUPID_NOT_FOUND = 0x12,
+    REGEX_ARGV_MATCH = 0x13,
     UNKNOWN_ERROR = 0xFF
 };
 

@@ -27,6 +27,7 @@ add_executable(smartcamp
         src/errors.cpp
         src/Foundation/Context.cpp
         src/Foundation/db.cpp
+        src/Foundation/Injector.cpp
         src/Commands/Config.cpp
         src/Commands/TestConnection.cpp
         src/Commands/Show/Show.cpp
