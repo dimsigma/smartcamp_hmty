@@ -31,11 +31,19 @@ jobs:
       # Build your program with the given configuration
       run: cmake --build ${{github.workspace}}/build --config ${{env.BUILD_TYPE}}
 
-    - name: Makedir artifacts
-      run: mkdir -p ${{github.workspace}}/artifacts
+    # Create artifacts directory and copy the executable
+    - name: Prepare Artifacts
+      run: |
+        mkdir -p ${{github.workspace}}/artifacts
+        cp ${{github.workspace}}\build\Release\smartcamp.exe ${{github.workspace}}\artifacts\
+      if: runner.os == 'Windows'
 
-    - name: cp artifacts
-      run: cp ${{github.workspace}}\build\Release\smartcamp.exe ${{github.workspace}}\artifacts\
+    # Upload artifacts for further use
+    - name: Upload Artifacts
+      uses: actions/upload-artifact@v3
+      with:
+        name: smartcamp
+        path: ${{github.workspace}}\artifacts
       
     - name: Test
       working-directory: ${{github.workspace}}\build
