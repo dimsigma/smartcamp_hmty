@@ -35,18 +35,31 @@ jobs:
       run: cmake --build ${{github.workspace}}/build --config ${{env.BUILD_TYPE}}
 
     # Create artifacts directory and copy the executable
-    - name: Prepare Artifacts
+    - name: Prepare Artifacts (Windows)
       run: |
         mkdir -p ${{github.workspace}}/artifacts
         cp ${{github.workspace}}\build\Release\smartcamp.exe ${{github.workspace}}\artifacts\
       if: runner.os == 'Windows'
 
     # Upload artifacts for further use
-    - name: Upload Artifacts
+    - name: Upload Artifacts (Windows)
       uses: actions/upload-artifact@v3
       with:
         name: smartcamp.exe
         path: ${{github.workspace}}\artifacts
       if: runner.os == 'Windows'
-      
 
+    - name: Prepare Artifacts (macOS)
+      run: |
+        mkdir -p ${{github.workspace}}/artifacts
+        cp ${{github.workspace}}/build/smartcamp ${{github.workspace}}/artifacts/
+      if: runner.os == 'macOS'
+
+    # Upload artifacts for further use
+    - name: Upload Artifacts (macOS)
+      uses: actions/upload-artifact@v3
+      with:
+        name: smartcamp
+        path: ${{github.workspace}}/artifacts
+      if: runner.os == 'macOS'
+      
