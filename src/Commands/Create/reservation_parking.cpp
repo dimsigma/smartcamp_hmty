@@ -14,21 +14,21 @@ ErrorCode getAvailParking(Commands::ReservationData *rd, Commands::PARKING_SPOT 
     sprintf(sql, tmpl, rd->checkinData, rd->checkoutData, rd->checkinData, rd->checkoutData, rd->checkinData, rd->checkoutData, rd->checkinData, rd->checkinData, rd->checkoutData, rd->checkoutData, rd->parking);
 
     Foundation::db *db = Foundation::db::getInstance();
-    MYSQL_RES *res;
+    MYSQL_RES *res1, *res2;
 
-    ErrorCode sqlerr = db->executeSQL(sql, &res);
+    ErrorCode sqlerr = db->executeSQL(sql, &res1);
     if(sqlerr != ErrorCode::SUCCESS) return sqlerr;
     std::cout << "Found Parking spots: " << std::endl;
-    db->printResult(res);
-    db->freeResult(res);
+    db->printResult(res1);
 
-    sqlerr = db->executeSQL(sql, &res);
+    sqlerr = db->executeSQL(sql, &res2);
     if(sqlerr != ErrorCode::SUCCESS) return sqlerr;
 
     MYSQL_ROW row;
     int i = 0;
-    while (row = mysql_fetch_row(res)) {
-        spots[i].letters = (char*) malloc(strlen(row[0]) * sizeof(char));
+
+    while ((row = mysql_fetch_row(res2)) != NULL) {
+        spots[i].letters = (char*) malloc(strlen(row[0]) * sizeof(char) + 1);
         strcpy(spots[i].letters, row[0]);
         spots[i].number = atoi(row[1]);
 #ifdef DEBUG
@@ -39,6 +39,8 @@ ErrorCode getAvailParking(Commands::ReservationData *rd, Commands::PARKING_SPOT 
 
     *actualParking = i;
 
+    db->freeResult(res1);
+    db->freeResult(res2);
     free(sql);
     std::cout << std::endl;
     return ErrorCode::SUCCESS;
