@@ -8,7 +8,7 @@ namespace Commands {
     private:
         ErrorCode err;
 
-        // update customer [--firstname | --lastname | --telcountry | --telnumber] <new_value> --cuid <cuid>
+        // update customer [--firstname | --lastname | --telcountry | --telnumber] <new_value> --bycuid <cuid>
         const char* const ShowCustomerInfo = "SELECT cus.cuid, cus.first_name, cus.middle_name, cus.last_name, cus.tel_country, cus.tel_num "
         "FROM CUSTOMER AS cus WHERE cus.cuid = %s;";
         const char* const CustomerFirstName = "UPDATE CUSTOMER SET first_name = '%s' WHERE cuid = %s;";
@@ -16,24 +16,26 @@ namespace Commands {
         const char* const CustomerTelcountry = "UPDATE CUSTOMER SET tel_country = %s WHERE cuid = %s;";
         const char* const CustomerTelnumber = "UPDATE CUSTOMER SET tel_num = %s WHERE cuid = %s;";
 
-        // update reservation cost <new_cost> --ruid <ruid>
+        // update reservation cost <new_cost> --byruid <ruid>
         const char* const ShowReservationCostInfo = "SELECT res.ruid, cus.first_name, cus.last_name, res.checkin_date, res.checkout_date, res.total_cost "
         "FROM RESERVATION AS res JOIN CUSTOMER AS cus ON res.main_cuid = cus.cuid WHERE res.ruid = %s;";
         const char* const ReservationCost = "UPDATE RESERVATION SET total_cost = %s WHERE ruid = %s;";
 
-        // update reservation services [--add | --remove] <service> --ruid <ruid>
+        // update reservation services [--add | --remove] <service> --byruid <ruid>
         const char* const ShowReservationServicesInfo = "SELECT inc_ser.service_name "
         "FROM RESERVATION AS res JOIN INCLUDED_SERVICE AS inc_ser ON res.ruid = inc_ser.ruid WHERE res.ruid = %s;";
         const char* const ReservationServices_add = "INSERT INTO INCLUDED_SERVICE(service_name, ruid) VALUES ('%s', %s);";
+        const char* const EditCost_add = "UPDATE RESERVATION AS res SET res.total_cost = res.total_cost + (SELECT ser.cost FROM SERVICE AS ser WHERE ser.name = '%s') WHERE res.ruid = %s;";
         const char* const ReservationServices_delete = "DELETE FROM INCLUDED_SERVICE WHERE service_name = '%s' AND ruid = %s;";
+        const char* const EditCost_sub = "UPDATE RESERVATION AS res SET res.total_cost  = res.total_cost - (SELECT ser.cost FROM SERVICE AS ser WHERE ser.name = '%s') WHERE res.ruid = %s;";
 
-        // update reservation parking [--add | --remove] <pletter> <pnumber> --ruid <ruid>
+        // update reservation parking [--add | --remove] <pletter> <pnumber> --byruid <ruid>
         const char* const ShowReservationParkingInfo = "SELECT res_p.pletter, res_p.pnumber "
         "FROM RESERVATION AS res JOIN RESERVED_PARKING AS res_p ON res.ruid = res_p.ruid WHERE res.ruid = %s;";
         const char* const ReservationParking_add = "INSERT INTO RESERVED_PARKING(ruid, pletter, pnumber) VALUES (%s, '%s', %s);";
         const char* const ReservationParking_delete = "DELETE FROM RESERVED_PARKING WHERE ruid = %s AND pletter = '%s' AND pnumber = %s;";
 
-        // update reservation accomodation [--add | --remove] <suid> --ruid <ruid>
+        // update reservation accomodation [--add | --remove] <suid> --byruid <ruid>
         const char* const ShowReservationAccomodationInfo = "SELECT acc_s.suid, acc_s.commercial_name, acc_s.class_name, acc_s.class_type, sp_c.season, sp_c.cost "
         "FROM RESERVATION AS res JOIN RESERVED_SPOT AS res_s ON res.ruid = res_s.ruid "
         "JOIN ACCOMODATION_SPOT AS acc_s ON res_s.suid = acc_s.suid "
@@ -48,6 +50,7 @@ namespace Commands {
         ErrorCode reservationCost(const int argc, const char* const argv[]);
         ErrorCode reservationCostShow(const int argc, const char* const argv[]);
 
+        ErrorCode editCost(const int argc, const char* const argv[]);
         ErrorCode reservationServices(const int argc, const char* const argv[]);
         ErrorCode reservationServicesShow(const int argc, const char* const argv[]);
 

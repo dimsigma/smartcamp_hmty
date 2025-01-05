@@ -48,6 +48,12 @@ Update::Update(const int argc, const char* const argv[])
             return;
         }
 
+        this->err = this->editCost(argc-2, (char **) &argv[2]);
+        if(err != ErrorCode::SUCCESS){
+            printError(err);
+            return;
+        }
+
         this->err = this->reservationServicesShow(argc-2, (char **) &argv[2]);
         if(err != ErrorCode::SUCCESS) printError(err);
         return;

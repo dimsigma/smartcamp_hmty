@@ -22,6 +22,7 @@
 #include <Commands/Describe.hpp>
 #include <Commands/Update.hpp>
 #include <Commands/Delete.hpp>
+#include <Commands/Stats.hpp>
 
 int main(int argc, char* argv[]){
     Foundation::Context* cont = Foundation::Context::getInstance();
@@ -53,6 +54,10 @@ int main(int argc, char* argv[]){
 
     if(!strcmp(argv[1], "delete")){
         Commands::Delete(argc-2, (char **) &argv[2]);
+    }
+
+    if(!strcmp(argv[1], "stats")){
+        Commands::Stats(argc-2, (char **) &argv[2]);
     }
 
     delete cont;

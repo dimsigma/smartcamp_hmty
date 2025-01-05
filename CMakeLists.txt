@@ -52,6 +52,10 @@ add_executable(smartcamp
         src/Commands/Delete/reservation.cpp
         src/Commands/Delete/customer.cpp
         src/Commands/Delete/service.cpp
+        src/Commands/Stats/Stats.cpp
+        src/Commands/Stats/occupancy.cpp
+        src/Commands/Stats/earnings.cpp
+        src/Commands/Stats/accomodation.cpp
 )
 
 if (NOT PLATFORM STREQUAL "Linux")

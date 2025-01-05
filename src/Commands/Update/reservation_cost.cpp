@@ -15,7 +15,7 @@ ErrorCode Update::reservationCost(const int argc, const char* const argv[])
 
     if(argc < 3) return ErrorCode::MISSING_PARAMS;
 
-    if((!strcmp(argv[1], "--ruid")) && argc == 3){
+    if((!strcmp(argv[1], "--byruid")) && argc == 3){
         sql = (char *) malloc((strlen(this->ReservationCost) * sizeof(char)) + (strlen(argv[0]) * sizeof(char)) + (strlen(argv[2]) * sizeof(char)) + 1);
         sprintf(sql, this->ReservationCost, argv[0], argv[2]);
         goto resCostSQLExec;
@@ -41,7 +41,7 @@ ErrorCode Update::reservationCostShow(const int argc, const char* const argv[])
 
     if(argc < 3) return ErrorCode::MISSING_PARAMS;
 
-    if((!strcmp(argv[1], "--ruid")) && argc == 3){
+    if((!strcmp(argv[1], "--byruid")) && argc == 3){
         sql = (char *) malloc((strlen(this->ShowReservationCostInfo) * sizeof(char)) + (strlen(argv[2]) * sizeof(char)) + 1);
         sprintf(sql, this->ShowReservationCostInfo, argv[2]);
         goto resCostShowSQLExec;
