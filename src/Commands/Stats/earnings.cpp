@@ -24,7 +24,7 @@ ErrorCode Stats::earnings(const int argc, const char* const argv[])
     if(argc == 2){
         sql = (char *) malloc((strlen(this->Earnings) * sizeof(char)) + (strlen(argv[0]) * sizeof(char)) + (strlen(argv[1]) * sizeof(char)) + 1);
         sprintf(sql, this->Earnings, argv[0], argv[1]);
-        goto earningsSQLExec;
+        goto earningsMonthSQLExec;
     }
 
     return ErrorCode::INVALID_PARAMS;
