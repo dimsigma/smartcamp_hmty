@@ -27,6 +27,7 @@ add_executable(smartcamp
         src/errors.cpp
         src/Foundation/Context.cpp
         src/Foundation/db.cpp
+        src/Foundation/Injector.cpp
         src/Commands/Config.cpp
         src/Commands/TestConnection.cpp
         src/Commands/Show/Show.cpp
@@ -38,6 +39,13 @@ add_executable(smartcamp
         src/Commands/Show/accommodation.cpp
         src/Commands/Show/spot_class.cpp
         src/Commands/Show/spot_class_count.cpp
+        src/Commands/Create/Create.cpp
+        src/Commands/Create/reservation.cpp
+        src/Commands/Create/reservation_customer.cpp
+        src/Commands/Create/reservation_accommodation.cpp
+        src/Commands/Create/reservation_parking.cpp
+        src/Commands/Create/reservation_creator.cpp
+        src/Commands/Create/payment.cpp
         src/Commands/Describe/Describe.cpp
         src/Commands/Describe/customer.cpp
         src/Commands/Describe/reservation.cpp
@@ -86,7 +94,7 @@ else ()
 endif()
 
 target_include_directories(smartcamp PRIVATE
-        "./external/tomlplusplus/include"
+        #"./external/tomlplusplus/include"
         "./include"
 )
 

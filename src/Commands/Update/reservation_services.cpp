@@ -33,7 +33,7 @@ resServicesSQLExec:
 
     Foundation::db *db = Foundation::db::getInstance();
 
-    ErrorCode sqlerr = db->executeSQL_nores(sql);
+    ErrorCode sqlerr = db->executeSQL(sql);
     if(sqlerr != ErrorCode::SUCCESS) return sqlerr;
 
     free(sql);
@@ -98,7 +98,7 @@ editCostSQLExec:
 
     Foundation::db *db = Foundation::db::getInstance();
 
-    ErrorCode sqlerr = db->executeSQL_nores(sql);
+    ErrorCode sqlerr = db->executeSQL(sql);
     if(sqlerr != ErrorCode::SUCCESS) return sqlerr;
 
     free(sql);

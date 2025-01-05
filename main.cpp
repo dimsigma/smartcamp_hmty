@@ -16,9 +16,11 @@
 
 #include <Foundation/Context.hpp>
 #include <Foundation/db.hpp>
+#include <Foundation/Injector.hpp>
 #include <Commands/Config.hpp>
 #include <Commands/TestConnection.hpp>
 #include <Commands/Show.hpp>
+#include <Commands/Create.hpp>
 #include <Commands/Describe.hpp>
 #include <Commands/Update.hpp>
 #include <Commands/Delete.hpp>
@@ -26,6 +28,7 @@
 
 int main(int argc, char* argv[]){
     Foundation::Context* cont = Foundation::Context::getInstance();
+    Foundation::Injector* inject = new Foundation::Injector(argc, argv);
 
     if(argc == 1){
         std::cout << "Missing Parameters" << std::endl;
@@ -44,6 +47,10 @@ int main(int argc, char* argv[]){
         Commands::Show(argc-2,(char**) &argv[2]);
     }
 
+    if(!strcmp(argv[1], "create")){
+        Commands::Create(argc-2,(char**) &argv[2]);
+    }
+  
     if(!strcmp(argv[1], "describe")){
         Commands::Describe(argc-2, (char **) &argv[2]);
     }
@@ -59,7 +66,8 @@ int main(int argc, char* argv[]){
     if(!strcmp(argv[1], "stats")){
         Commands::Stats(argc-2, (char **) &argv[2]);
     }
-
+  
+    delete inject;
     delete cont;
     return (int) ErrorCode::SUCCESS;
 }
