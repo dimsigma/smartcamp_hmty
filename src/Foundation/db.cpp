@@ -104,6 +104,7 @@ ErrorCode db::executeSQL(const char* const query, MYSQL_RES** result) const {
     return ErrorCode::SUCCESS;
 }
 
+
 ErrorCode db::executeSQL(const char* const query) const {
     
 #ifdef DEBUG
@@ -114,7 +115,6 @@ ErrorCode db::executeSQL(const char* const query) const {
         std::cerr << "Query failed: " << mysql_error(this->conn) << std::endl;
         return ErrorCode::MYSQL_QUERY_ERROR;
     }
-    
     return ErrorCode::SUCCESS;
 }
 
