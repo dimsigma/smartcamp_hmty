@@ -1,0 +1,31 @@
+version: '3.8'
+
+services:
+  mysql:
+    image: mysql:8.0
+    container_name: mysql_container
+    restart: always
+    environment:
+      MYSQL_ROOT_PASSWORD: toor # Set a strong root password
+      MYSQL_DATABASE: smartcamp # Optional: Default database
+      MYSQL_USER: smarty # Optional: Non-root user
+      MYSQL_PASSWORD: ytrams # Optional: Non-root password
+    ports:
+      - "3306:3306"
+    volumes:
+      - mysql_data:/var/lib/mysql # Persistent storage
+
+  phpmyadmin:
+    image: phpmyadmin/phpmyadmin:latest
+    container_name: phpmyadmin_container
+    restart: always
+    environment:
+      PMA_HOST: mysql # Refers to the MySQL service name
+      PMA_PORT: 3306
+      #PMA_USER: root
+      #PMA_PASSWORD: rootpassword
+    ports:
+      - "8080:80"
+
+volumes:
+  mysql_data:
