@@ -9,7 +9,7 @@
 
 using namespace Commands;
 
-#define WTENT "SPOT_CLASS.class_type = 'ΤΕΝΤ'"
+#define WTENT "SPOT_CLASS.class_type = 'TENT'"
 #define WBUNGALOW "SPOT_CLASS.class_type = 'BUNGALOW'"
 #define WRV "SPOT_CLASS.class_type = 'RV'"
 

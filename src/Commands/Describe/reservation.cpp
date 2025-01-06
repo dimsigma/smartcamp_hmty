@@ -56,8 +56,8 @@ ErrorCode Describe::reservationAccomodation(const int argc, const char* const ar
 
     const char* const l1 = "6";
     const char* const l2 = "8";
-    const char* const s1 = "WINTER";
-    const char* const s2 = "SUMMER";
+    const char* const s1 = "LOW";
+    const char* const s2 = "HIGH";
 
     if(argc < 2) return ErrorCode::MISSING_PARAMS;
 
