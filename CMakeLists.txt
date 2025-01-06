@@ -45,6 +45,7 @@ add_executable(smartcamp
         src/Commands/Create/reservation_accommodation.cpp
         src/Commands/Create/reservation_parking.cpp
         src/Commands/Create/reservation_creator.cpp
+        src/Commands/Create/service.cpp
         src/Commands/Create/payment.cpp
         src/Commands/Describe/Describe.cpp
         src/Commands/Describe/customer.cpp

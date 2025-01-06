@@ -47,7 +47,7 @@ ErrorCode Update::reservationParkingShow(const int argc, const char* const argv[
 
     if(argc < 5) return ErrorCode::MISSING_PARAMS;
 
-    if(((!strcmp(argv[0], "--add")) || (!strcmp(argv[0], "--remove"))) && (!strcmp(argv[3], "--ruid")) && argc == 5){
+    if(((!strcmp(argv[0], "--add")) || (!strcmp(argv[0], "--remove"))) && (!strcmp(argv[3], "--byruid")) && argc == 5){
         sql = (char *) malloc((strlen(this->ShowReservationParkingInfo) * sizeof(char)) + (strlen(argv[4]) * sizeof(char)) + 1);
         sprintf(sql, this->ShowReservationParkingInfo, argv[4]);
         goto resParkingShowSQLExec;

@@ -27,6 +27,12 @@ Create::Create(const int argc, const char* const argv[]){
         if(err != ErrorCode::SUCCESS) printError(err);
         return;
     }
+
+    if(!strcmp(argv[0], "service")){
+        this->err = this->service(argc-1, (char **) &argv[1]);
+        if(err != ErrorCode::SUCCESS) printError(err);
+        return;
+    }
 }
 
 Create::~Create(){}

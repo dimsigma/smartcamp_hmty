@@ -23,15 +23,10 @@ namespace Commands {
         "GROUP BY MONTH(checkin_date);";
 
         // stats accomodation <startdate> <enddate>
-        const char* const Accomodation5 = "SELECT res_s.suid AS spot, SUM(DATEDIFF(res.checkout_date, res.checkin_date)) AS days "
+        const char* const Accomodation = "SELECT res_s.suid AS spot, SUM(DATEDIFF(IF(res.checkout_date > '%s', '%s', res.checkout_date), IF(res.checkin_date < '%s', '%s', res.checkin_date))) AS total_days_booked "
         "FROM RESERVATION AS res JOIN RESERVED_SPOT AS res_s ON res.ruid = res_s.ruid "
-        "WHERE ((checkin_date >= '%s' AND checkin_date <= '%s') OR (checkout_date > '%s' AND checkout_date <= '%s')) "
-        "GROUP BY res_s.suid;";
-
-        const char* const Accomodation = "SELECT res_s.suid AS spot "
-        "FROM RESERVATION AS res JOIN RESERVED_SPOT AS res_s ON res.ruid = res_s.ruid "
-        "WHERE res.checkin_date >= '%s' AND res.checkin_date <= '%s' "
-        "GROUP BY res_s.suid;";
+        "WHERE res.checkin_date <= '%s' AND res.checkin_date > '%s' "
+        "GROUP BY res_s.suid ORDER BY res_s.suid ASC;";
 
         ErrorCode occupancy(const int argc, const char* const argv[]);
         ErrorCode earnings(const int argc, const char* const argv[]);

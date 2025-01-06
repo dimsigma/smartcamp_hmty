@@ -30,6 +30,8 @@ serviceSQLExec:
     ErrorCode sqlerr = db->executeSQL(sql);
     if(sqlerr != ErrorCode::SUCCESS) return sqlerr;
 
+    std::cout << "Service deleted!" << std::endl;
+
     free(sql);
     
     return ErrorCode::SUCCESS;

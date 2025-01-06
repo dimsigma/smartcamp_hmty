@@ -36,11 +36,11 @@ namespace Commands {
         const char* const CustomerGeneral_bysuid = "SELECT cus.cuid, cus.first_name, cus.middle_name, cus.last_name, cus.tel_country, cus.tel_num "
         "FROM CUSTOMER AS cus JOIN RESERVATION AS res ON cus.cuid = res.main_cuid "
         "JOIN RESERVED_SPOT AS res_s ON res.ruid = res_s.ruid "
-        "WHERE res_s.suid = %s AND res.checkin_date <= GETDATE() AND res.checkout_date > GETDATE();";
+        "WHERE res_s.suid = %s AND res.checkin_date <= CURDATE() AND res.checkout_date > CURDATE();";
         const char* const CustomerReservation_bysuid = "SELECT res.ruid, res.checkin_date, res.checkout_date, res.total_cost "
         "FROM CUSTOMER AS cus JOIN RESERVATION AS res ON cus.cuid = res.main_cuid "
         "WHERE cus.cuid IN (SELECT cus.cuid FROM CUSTOMER AS cus JOIN RESERVATION AS res ON cus.cuid = res.main_cuid "
-        "JOIN RESERVED_SPOT AS res_s ON res.ruid = res_s.ruid WHERE res_s.suid = %s AND res.checkin_date <= GETDATE() AND res.checkout_date > GETDATE());";
+        "JOIN RESERVED_SPOT AS res_s ON res.ruid = res_s.ruid WHERE res_s.suid = %s AND res.checkin_date <= CURDATE() AND res.checkout_date > CURDATE());";
 
         // describe reservation --byruid <ruid>
         const char* const ReservationGeneral_byruid = "SELECT res.ruid, cus.first_name, cus.last_name, res.checkin_date, res.checkout_date, res.total_cost "
@@ -66,24 +66,24 @@ namespace Commands {
         const char* const ReservationGeneral_bysuid = "SELECT res.ruid, cus.first_name, cus.last_name, res.checkin_date, res.checkout_date, res.total_cost "
         "FROM RESERVATION AS res JOIN CUSTOMER AS cus ON res.main_cuid = cus.cuid "
         "JOIN RESERVED_SPOT AS res_s ON res.ruid = res_s.ruid "
-        "WHERE res_s.suid = %s AND res.checkin_date <= GETDATE() AND res.checkout_date > GETDATE();";
+        "WHERE res_s.suid = %s AND res.checkin_date <= CURDATE() AND res.checkout_date > CURDATE();";
         const char* const ReservationAccomodation_bysuid = "SELECT acc_s.suid, acc_s.commercial_name, acc_s.class_name, acc_s.class_type, sp_c.season, sp_c.cost "
         "FROM RESERVATION AS res JOIN RESERVED_SPOT AS res_s ON res.ruid = res_s.ruid "
         "JOIN ACCOMODATION_SPOT AS acc_s ON res_s.suid = acc_s.suid "
         "JOIN SPOT_CLASS AS sp_c ON (acc_s.class_name = sp_c.class_name AND acc_s.class_type = sp_c.class_type) "
-        "WHERE res_s.suid = %s AND res.checkin_date <= GETDATE() AND res.checkout_date > GETDATE();";
+        "WHERE res_s.suid = %s AND res.checkin_date <= CURDATE() AND res.checkout_date > CURDATE() AND sp_c.season = IF(MONTH(res.checkin_date) < %s OR MONTH(res.checkin_date) > %s, '%s', '%s');";
         const char* const ReservationServices_bysuid = "SELECT inc_ser.service_name "
         "FROM RESERVATION AS res JOIN INCLUDED_SERVICE AS inc_ser ON res.ruid = inc_ser.ruid "
         "JOIN RESERVED_SPOT AS res_s ON res.ruid = res_s.ruid "
-        "WHERE res_s.suid = %s AND res.checkin_date <= GETDATE() AND res.checkout_date > GETDATE();";
+        "WHERE res_s.suid = %s AND res.checkin_date <= CURDATE() AND res.checkout_date > CURDATE();";
         const char* const ReservationParking_bysuid = "SELECT res_p.pletter, res_p.pnumber "
         "FROM RESERVATION AS res JOIN RESERVED_PARKING AS res_p ON res.ruid = res_p.ruid "
         "JOIN RESERVED_SPOT AS res_s ON res.ruid = res_s.ruid "
-        "WHERE res_s.suid = %s AND res.checkin_date <= GETDATE() AND res.checkout_date > GETDATE();";
+        "WHERE res_s.suid = %s AND res.checkin_date <= CURDATE() AND res.checkout_date > CURDATE();";
         const char* const ReservationPayment_bysuid = "SELECT pay.puid, pay.method, pay.amount, pay.date "
         "FROM RESERVATION AS res JOIN PAYMENT AS pay ON res.ruid = pay.ruid "
         "JOIN RESERVED_SPOT AS res_s ON res.ruid = res_s.ruid "
-        "WHERE res_s.suid = %s AND res.checkin_date <= GETDATE() AND res.checkout_date > GETDATE() "
+        "WHERE res_s.suid = %s AND res.checkin_date <= CURDATE() AND res.checkout_date > CURDATE() "
         "ORDER BY pay.date DESC;";
 
         // describe accomodation --bysuid <suid>

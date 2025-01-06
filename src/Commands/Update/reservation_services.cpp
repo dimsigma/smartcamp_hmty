@@ -81,14 +81,14 @@ ErrorCode Update::editCost(const int argc, const char* const argv[])
     if(argc < 4) return ErrorCode::MISSING_PARAMS;
 
     if((!strcmp(argv[0], "--add")) && (!strcmp(argv[2], "--byruid")) && argc == 4){
-        sql = (char *) malloc((strlen(this->EditCost_add) * sizeof(char)) + (strlen(argv[1]) * sizeof(char)) + (strlen(argv[3]) * sizeof(char)) + 1);
-        sprintf(sql, this->EditCost_add, argv[1], argv[3]);
+        sql = (char *) malloc((strlen(this->EditCostService_add) * sizeof(char)) + (strlen(argv[1]) * sizeof(char)) + (strlen(argv[3]) * sizeof(char)) + 1);
+        sprintf(sql, this->EditCostService_add, argv[1], argv[3]);
         goto editCostSQLExec;
     }
 
     if((!strcmp(argv[0], "--remove")) && (!strcmp(argv[2], "--byruid")) && argc == 4){
-        sql = (char *) malloc((strlen(this->EditCost_sub) * sizeof(char)) + (strlen(argv[1]) * sizeof(char)) + (strlen(argv[3]) * sizeof(char)) + 1);
-        sprintf(sql, this->EditCost_sub, argv[1], argv[3]);
+        sql = (char *) malloc((strlen(this->EditCostService_sub) * sizeof(char)) + (strlen(argv[1]) * sizeof(char)) + (strlen(argv[3]) * sizeof(char)) + 1);
+        sprintf(sql, this->EditCostService_sub, argv[1], argv[3]);
         goto editCostSQLExec;
     }
 

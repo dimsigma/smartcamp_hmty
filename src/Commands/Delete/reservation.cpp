@@ -30,6 +30,8 @@ resrvationSQLExec:
     ErrorCode sqlerr = db->executeSQL(sql);
     if(sqlerr != ErrorCode::SUCCESS) return sqlerr;
 
+    std::cout << "Reservation deleted!" << std::endl;
+
     free(sql);
     
     return ErrorCode::SUCCESS;

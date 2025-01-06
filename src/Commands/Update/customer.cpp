@@ -22,6 +22,12 @@ ErrorCode Update::customer(const int argc, const char* const argv[])
         goto customerSQLExec;
     }
 
+    if((!strcmp(argv[0], "--middlename")) && (!strcmp(argv[2], "--bycuid")) && argc == 4){
+        sql = (char *) malloc((strlen(this->CustomerMiddleName) * sizeof(char)) + (strlen(argv[1]) * sizeof(char)) + (strlen(argv[3]) * sizeof(char)) + 1);
+        sprintf(sql, this->CustomerMiddleName, argv[1], argv[3]);
+        goto customerSQLExec;
+    }
+
     if((!strcmp(argv[0], "--lastname")) && (!strcmp(argv[2], "--bycuid")) && argc == 4){
         sql = (char *) malloc((strlen(this->CustomerLastName) * sizeof(char)) + (strlen(argv[1]) * sizeof(char)) + (strlen(argv[3]) * sizeof(char)) + 1);
         sprintf(sql, this->CustomerLastName, argv[1], argv[3]);
@@ -60,7 +66,7 @@ ErrorCode Update::customerShow(const int argc, const char* const argv[])
 
     if(argc < 4) return ErrorCode::MISSING_PARAMS;
 
-    if(((!strcmp(argv[0], "--firstname")) || (!strcmp(argv[0], "--lastname")) || (!strcmp(argv[0], "--telcountry")) || (!strcmp(argv[0], "--telnumber"))) && (!strcmp(argv[2], "--bycuid")) && argc == 4){
+    if(((!strcmp(argv[0], "--firstname")) ||  (!strcmp(argv[0], "--middlename")) || (!strcmp(argv[0], "--lastname")) || (!strcmp(argv[0], "--telcountry")) || (!strcmp(argv[0], "--telnumber"))) && (!strcmp(argv[2], "--bycuid")) && argc == 4){
         sql = (char *) malloc((strlen(this->ShowCustomerInfo) * sizeof(char)) + (strlen(argv[3]) * sizeof(char)) + 1);
         sprintf(sql, this->ShowCustomerInfo, argv[3]);
         goto customerShowSQLExec;

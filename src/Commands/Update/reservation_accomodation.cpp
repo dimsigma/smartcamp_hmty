@@ -72,7 +72,7 @@ resAccomodationShowSQLExec:
 
     db->printResult(res);
     db->freeResult(res);
-    std::cout << std::endl;
+    std::cout << "ATTENTION: The cost of the reservation needs to also be edited accordingly." << std::endl;
 
     free(sql);
     

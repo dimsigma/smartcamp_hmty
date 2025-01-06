@@ -29,7 +29,7 @@ Update::Update(const int argc, const char* const argv[])
         return;
     }
 
-    if((!strcmp(argv[0], "reservation")) && (!strcmp(argv[1], "cost"))){
+    if((!strcmp(argv[0], "reservation")) && (!strcmp(argv[1], "--cost"))){
         this->err = this->reservationCost(argc-2, (char **) &argv[2]);
         if(err != ErrorCode::SUCCESS){
             printError(err);
@@ -41,7 +41,7 @@ Update::Update(const int argc, const char* const argv[])
         return;
     }
 
-    if((!strcmp(argv[0], "reservation")) && (!strcmp(argv[1], "services"))){
+    if((!strcmp(argv[0], "reservation")) && (!strcmp(argv[1], "--services"))){
         this->err = this->reservationServices(argc-2, (char **) &argv[2]);
         if(err != ErrorCode::SUCCESS){
             printError(err);
@@ -59,7 +59,7 @@ Update::Update(const int argc, const char* const argv[])
         return;
     }
 
-    if((!strcmp(argv[0], "reservation")) && (!strcmp(argv[1], "parking"))){
+    if((!strcmp(argv[0], "reservation")) && (!strcmp(argv[1], "--parking"))){
         this->err = this->reservationParking(argc-2, (char **) &argv[2]);
         if(err != ErrorCode::SUCCESS){
             printError(err);
@@ -71,7 +71,7 @@ Update::Update(const int argc, const char* const argv[])
         return;
     }
 
-    if((!strcmp(argv[0], "reservation")) && (!strcmp(argv[1], "accomodation"))){
+    if((!strcmp(argv[0], "reservation")) && (!strcmp(argv[1], "--accomodation"))){
         this->err = this->reservationAccomodation(argc-2, (char **) &argv[2]);
         if(err != ErrorCode::SUCCESS){
             printError(err);

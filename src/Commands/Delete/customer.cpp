@@ -30,6 +30,8 @@ customerSQLExec:
     ErrorCode sqlerr = db->executeSQL(sql);
     if(sqlerr != ErrorCode::SUCCESS) return sqlerr;
 
+    std::cout << "Customer deleted!" << std::endl;
+
     free(sql);
     
     return ErrorCode::SUCCESS;

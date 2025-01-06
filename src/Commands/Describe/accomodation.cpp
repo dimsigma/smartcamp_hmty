@@ -16,7 +16,7 @@ ErrorCode Describe::accomodationGeneral(const int argc, const char* const argv[]
 
     if(argc < 2) return ErrorCode::MISSING_PARAMS;
 
-    if((!strcmp(argv[0], "--byruid")) && argc == 2){
+    if((!strcmp(argv[0], "--bysuid")) && argc == 2){
         sql = (char *) malloc((strlen(this->AccomodationGeneral) * sizeof(char)) + (strlen(argv[1]) * sizeof(char)) + 1);
         sprintf(sql, this->AccomodationGeneral, argv[1]);
         goto generalSQLExec;
@@ -50,7 +50,7 @@ ErrorCode Describe::accomodationReservation(const int argc, const char* const ar
 
     if(argc < 2) return ErrorCode::MISSING_PARAMS;
 
-    if((!strcmp(argv[0], "--byruid")) && argc == 2){
+    if((!strcmp(argv[0], "--bysuid")) && argc == 2){
         sql = (char *) malloc((strlen(this->AccomodationReservation) * sizeof(char)) + (strlen(argv[1]) * sizeof(char)) + 1);
         sprintf(sql, this->AccomodationReservation, argv[1]);
         goto reservationSQLExec;
